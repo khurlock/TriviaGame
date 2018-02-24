@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Trivia Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        body {
+            color: white;
+            background-color: #0c0b0f;
+            background-image: url("https://www.transparenttextures.com/patterns/ice-age.png");
+            margin: 20px 10px 20px 10px;
+        }
+        /* .container {
+            width: 75%;
+            background-color: #cccccc;
+        } */
+        h1 {
+            margin: 20px 0 10px 0;
+        }
+        header {
+            margin: 20px;
+            position: fixed;
+            top: 0;
+            right: 0;
+        }
+        h3 {
+            margin: 50px 0 15px 0;
+        }
+        #answerBtn {
+            margin: 10px 0 20px 0;
+        }
+        .incorrect{
+            
+        }
+        .correct{
+
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <div id="timer" class="text-center"></div>
+    </header>
+    <div class="container">
+        <div class="row mt-5">
+            <div id="title" class="col-md-12">
+                <h1 class="text-center">Trivia Game</h1>
+                <button type="button" class="btn btn-primary btn-lg btn-block start-button" id="startBtn">Start</button>
+            </div>    
+        </div>
+        <div id="game" class="row"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
+    <script>
+    $(document).ready(function(){
+        var score = 0
+        var totalQuestions = 10
+        var counter = 60
+        var chosenQuestions = []
+        
+        $("#timer").hide()
+
+        $("#startBtn").on("click", function() {
+            generateTrivia()
+            $("#startBtn").hide()
+            setInterval(function(){
+                counter-- 
+                $("#timer").html("<h4>Time Left:</h4>" + "<h4>" + counter + "</h4>")
+                if (counter == 0) {
+                    $("#timer").hide()
+                }
+            }, 1000)
+            $("#timer").show()
+        })
+
+        //loop through trivia questions 10 times pushing to new array and splicing from old array to avoid duplicate questions.
+        function chooseQuestions() {
+            for (i = 0; i < 10; i++) {
+                rand = Math.floor(Math.random() * triviaArr.length)
+                quest = triviaArr[rand]
+                chosenQuestions.push(quest)
+                triviaArr.splice(rand, 1)
+            }
+        }
+
+        //put 10 chosen questions on the screen
+        function generateTrivia() {
+            for (i = 0; i < chosenQuestions.length; i++) {
+                var myTrivia = "<div class='col-md-5'><h3 value=" + i + ">" + (i+1) + ". " + chosenQuestions[i].question + "</h3><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.a + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.b + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.c + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.d + "</p></div>"
+                $("#game").append(myTrivia)
+                // console.log(triviaArr)
+                console.log(chosenQuestions)
+            }
+        }
+
+        // $(document).on("click", "#answerBtn", function() {
+        //     console.log(this)
+        //     var value = $(this).val()
+        //     if (this.includes(correctAnswer[value])) {
+        //         score ++
+        //     }
+        //     console.log(score)
+        // })
+
+        var triviaArr = [
+            {
+                question : "What is Necrophobia?",
+                answers: {
+                a : "Fear of dentists",
+                b : "Fear of water",
+                c : "Fear of death or dead things",
+                d : "Fear of women"
+                },
+                correctAnswer : "Fear of death or dead things"
+            },
+            {
+                question : "What is Zoophobia?",
+                answers: {
+                a : "Fear of small things",
+                b : "Fear of fire",
+                c : "Fear of trees",
+                d : "Fear of animals"
+                },
+                correctAnswer : "Fear of animals"
+            },
+            {
+                question : "What is Ornithophobia?",
+                answers: {
+                a : "Fear of men",
+                b : "Fear of gaining weight",
+                c : "Fear of brids",
+                d : "Fear of numbers"
+                },
+                correctAnswer : "Fear of birds"
+            },
+            {
+                question : "What is Wiccaphobia?",
+                answers: {
+                a : "Fear of open spaces or crowds",
+                b : "Fear of fire",
+                c : "Fear of witches or witchcraft",
+                d : "Fear of the sun"
+                },
+                correctAnswer : "Fear of witches or witchcraft"
+            },
+            {
+                question : "What is Dentophobia?",
+                answers: {
+                a : "Fear of dentists",
+                b : "Fear of plants",
+                c : "Fear of strangers or foreigners",
+                d : "Fear of animals"
+                },
+                correctAnswer : "Fear of dentists"
+            },
+            {
+                question : "What is Gynophobia?",
+                answers: {
+                a : "Fear of women",
+                b : "Fear of gaining weight",
+                c : "Fear of paper",
+                d : "Fear of animals"
+                },
+                correctAnswer : "Fear of women"
+            },
+            {
+                question : "What is Hemophobia?",
+                answers: {
+                a : "Fear of animals",
+                b : "Fear of plants",
+                c : "Fear of birds",
+                d : "Fear of blood"
+                },
+                correctAnswer : "Fear of blood"
+            },
+            {
+                question : "What is Claustrophobia?",
+                answers: {
+                a : "Fear of plants",
+                b : "Fear of being alone",
+                c : "Fear of confined spaces",
+                d : "Fear of books"
+                },
+                correctAnswer : "Fear of confined spaces"
+            },
+            {
+                question : "What is Bibliophobia?",
+                answers: {
+                a : "Fear of books",
+                b : "Fear of colors",
+                c : "Fear of birds",
+                d : "Fear of computers"
+                },
+                correctAnswer : "Fear of books"
+            },
+            {
+                question : "What is Androphobia?",
+                answers: {
+                a : "Fear of birds",
+                b : "Fear of men",
+                c : "Fear of paper",
+                d : "Fear of gaining weight"
+                },
+                correctAnswer : "Fear of men"
+            },
+            {
+                question : "What is Chromophobia?",
+                answers: {
+                a : "Fear of the figure 8",
+                b : "Fear of children",
+                c : "Fear of colors",
+                d : "Fear of water"
+                },
+                correctAnswer : "Fear of colors"
+            },
+            {
+                question : "What is Autophobia?",
+                answers: {
+                a : "Fear of books",
+                b : "Fear of men",
+                c : "Fear of being alone",
+                d : "Fear of children"
+                },
+                correctAnswer : "Fear of being alone"
+            },
+            {
+                question : "What is Podophobia?",
+                answers: {
+                a : "Fear of feet",
+                b : "Fear of numbers",
+                c : "Fear of the sun",
+                d : "Fear of small things"
+                },
+                correctAnswer : "Fear of feet"
+            },
+            {
+                question : "What is Megalophobia?",
+                answers: {
+                a : "Fear of dentists",
+                b : "Fear of water",
+                c : "Fear of large things",
+                d : "Fear of women"
+                },
+                correctAnswer : "Fear of large things"
+            },
+            {
+                question : "What is Octophobia?",
+                answers: {
+                a : "Fear of women",
+                b : "Fear of men",
+                c : "Fear of the figure 8",
+                d : "Fear of computers"
+                },
+                correctAnswer : "Fear of the figure 8"
+            },
+            {
+                question : "What is Papyrophobia?",
+                answers: {
+                a : "Fear of spiders",
+                b : "Fear of paper",
+                c : "Fear of numbers",
+                d : "Fear of death or dead things"
+                },
+                correctAnswer : "Fear of paper"
+            },
+            {
+                question : "What is Arachnophobia?",
+                answers: {
+                a : "Fear of children",
+                b : "Fear of the figure 8",
+                c : "Fear of water",
+                d : "Fear of spiders"
+                },
+                correctAnswer : "Fear of spiders"
+            },
+            {
+                question : "What is Microphobia?",
+                answers: {
+                a : "Fear of small things",
+                b : "Fear of women",
+                c : "Fear of water",
+                d : "Fear of dentists"
+                },
+                correctAnswer : "Fear of small things"
+            },
+            {
+                question : "What is Botanophobia?",
+                answers: {
+                a : "Fear of animals",
+                b : "Fear of strangers or foreigners",
+                c : "Fear of plants",
+                d : "Fear of birds"
+                },
+                correctAnswer : "Fear of plants"
+            },
+            {
+                question : "What is Heliophobia?",
+                answers: {
+                a : "Fear of confined spaces",
+                b : "Fear of the sun",
+                c : "Fear of strangers or foreigners",
+                d : "Fear of plants"
+                },
+                correctAnswer : "Fear of the sun"
+            },
+            {
+                question : "What is Xenophobia?",
+                answers: {
+                a : "Fear of strangers or foreigners",
+                b : "Fear of paper",
+                c : "Fear of spiders",
+                d : "Fear of witches or witchcraft"
+                },
+                correctAnswer : "Fear of strangers or foreigners"
+            },
+            {
+                question : "What is Cyberphobia?",
+                answers: {
+                a : "Fear of children",
+                b : "Fear of computers",
+                c : "Fear of books",
+                d : "Fear of men"
+                },
+                correctAnswer : "Fear of computers"
+            },
+            {
+                question : "What is Obesophobia?",
+                answers: {
+                a : "Fear of gaining weight",
+                b : "Fear of women",
+                c : "Fear of dentists",
+                d : "Fear of men"
+                },
+                correctAnswer : "Fear of gaining weight"
+            },
+            {
+                question : "What is Dendrophobia?",
+                answers: {
+                a : "Fear of computers",
+                b : "Fear of birds",
+                c : "Fear of trees",
+                d : "Fear of colors"
+                },
+                correctAnswer : "Fear of trees"
+            },
+            {
+                question : "What is Sociophobia?",
+                answers: {
+                a : "Fear of numbers",
+                b : "Fear of spiders",
+                c : "Fear of the sun",
+                d : "Fear of social evaluation"
+                },
+                correctAnswer : "Fear of social evaluation"
+            },
+            {
+                question : "What is Agoraphobia?",
+                answers: {
+                a : "Fear of gaining weight",
+                b : "Fear of books",
+                c : "Fear of paper",
+                d : "Fear of open spaces or crowds"
+                },
+                correctAnswer : "Fear of open spaces or crowds"
+            },
+            {
+                question : "What is Arithmophobia?",
+                answers: {
+                a : "Fear of being alone",
+                b : "Fear of plants",
+                c : "Fear of books",
+                d : "Fear of numbers"
+                },
+                correctAnswer : "Fear of numbers"
+            },
+            {
+                question : "What is Pyrophobia?",
+                answers: {
+                a : "Fear of fire",
+                b : "Fear of the sun",
+                c : "Fear of the figure 8",
+                d : "Fear of numbers"
+                },
+                correctAnswer : "Fear of fire"
+            },
+            {
+                question : "What is Pedophobia?",
+                answers: {
+                a : "Fear of the figure 8",
+                b : "Fear of animals",
+                c : "Fear of the sun",
+                d : "Fear of children"
+                },
+                correctAnswer : "Fear of children"
+            },
+            {
+                question : "What is Hydrophobia?",
+                answers: {
+                a : "Fear of dentists",
+                b : "Fear of water",
+                c : "Fear of the figure 8",
+                d : "Fear of children"
+                },
+                correctAnswer : "Fear of water"
+            },
+        ]
+        chooseQuestions()
+    })
+    </script>
+</body>
+</html>
