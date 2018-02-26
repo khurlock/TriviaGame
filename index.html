@@ -34,10 +34,12 @@
             margin: 10px 0 20px 0;
         }
         .incorrect{
-            
+            color: black;
+            background-color: red;
         }
         .correct{
-
+            color: black;
+            background-color: lightgreen;
         }
     </style>
 
@@ -102,14 +104,22 @@
             }
         }
 
-        // $(document).on("click", "#answerBtn", function() {
-        //     console.log(this)
-        //     var value = $(this).val()
-        //     if (this.includes(correctAnswer[value])) {
-        //         score ++
-        //     }
-        //     console.log(score)
-        // })
+        // clicking the answers chacnges css and increases score if correct answer.
+        $(document).on("click", "#answerBtn", function() {
+            var index = $(this).attr("value")
+            var txt = $(this).text()
+
+            if (txt === chosenQuestions[index].correctAnswer) {
+                score++
+                $(this).addClass("correct")
+                console.log(score)
+            }
+            else {
+                $(this).addClass("incorrect")
+            }
+            console.log(txt)
+            console.log(chosenQuestions[index].correctAnswer)
+        })
 
         var triviaArr = [
             {
