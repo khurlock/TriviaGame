@@ -14,10 +14,6 @@
             background-image: url("https://www.transparenttextures.com/patterns/ice-age.png");
             margin: 20px 10px 20px 10px;
         }
-        /* .container {
-            width: 75%;
-            background-color: #cccccc;
-        } */
         h1 {
             margin: 20px 0 10px 0;
         }
@@ -94,14 +90,13 @@
             }
         }
 
-        //put 10 chosen questions on the screen
+        //put 10 chosen questions on the screen, and a submit button if they finish before time expires.
         function generateTrivia() {
             for (i = 0; i < chosenQuestions.length; i++) {
                 var myTrivia = "<div class='col-md-5'><h3 value=" + i + ">" + (i+1) + ". " + chosenQuestions[i].question + "</h3><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.a + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.b + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.c + "</p><p id='answerBtn' value=" + i + ">" + chosenQuestions[i].answers.d + "</p></div>"
                 $("#game").append(myTrivia)
-                // console.log(triviaArr)
-                console.log(chosenQuestions)
             }
+
             var submitButton = "<div class='col-md-12 mt-5'><button type='button' class='btn btn-primary btn-lg btn-block start-button' id='submitBtn'>Submit Quiz</button></div>"
             $("#game").append(submitButton)
         }
@@ -110,23 +105,28 @@
         $(document).on("click", "#answerBtn", function() {
             var index = $(this).attr("value")
             var txt = $(this).text()
-
+            
             if (txt === chosenQuestions[index].correctAnswer) {
                 score++
                 $(this).addClass("correct")
-                console.log(score)
+                $(this).removeAttr("id")
             }
             else {
                 $(this).addClass("incorrect")
             }
-            console.log(txt)
-            console.log(chosenQuestions[index].correctAnswer)
         })
 
         //submit quiz button for score screen
         $("#submitBtn").on("click", function() {
             var endScreen = "<div class ='row'><div class ='col-md-12 text-center'><h2>You Scored:</h2><h2>"+score+"/10"+"</h2></div></div>"
             $("#game").html(endScreen)
+
+            var resetButton = "<div class='col-md-12 mt-5'><button type='button' class='btn btn-primary btn-lg btn-block start-button' id='resetBtn'>Play Again</button></div>"
+            $("#game").append(resetButton)
+        })
+
+        $("#resetBtn").on("click", function() {
+            location.reload()
         })
 
         var triviaArr = [
